@@ -12,8 +12,17 @@ import android.widget.Button;
  */
 public class FragmentA extends Fragment implements View.OnClickListener{
     Button button;
-    int counter = 0;
+    int counter;
     Communicator comm;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState != null)
+            counter = savedInstanceState.getInt("counter", 0);
+        else
+            counter = 0;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -26,6 +35,12 @@ public class FragmentA extends Fragment implements View.OnClickListener{
         comm = (Communicator) getActivity();
         button = (Button) getActivity().findViewById(R.id.button);
         button.setOnClickListener(this);
+    }
+
+    @Override
+    public void onSaveInstanceState (Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putInt("counter", counter);
     }
 
     @Override
